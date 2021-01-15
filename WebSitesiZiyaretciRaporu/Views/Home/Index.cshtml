@@ -1,0 +1,100 @@
+﻿@model WebSitesiZiyaretciRaporu.ViewModel.DataViewModel
+@{
+    ViewBag.Title = "Web Sitesi Ziyaretçi Raporu";
+}
+<style>
+    th{
+        color:white;
+    }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<div>
+    <div class="row">
+        <h3><b>Toplam Ziyaretçi Sayısı:</b> @Model.TotalVisitCount.ToString("n0")</h3>
+    </div>
+    <div class="row">
+        <h3><b>En çok ziyaretçinin geldiği ülke:</b> @Model.MostVisitCountry</h3>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<div >
+    <div class="row">
+        <h3>Sayfa Görüntülenme Sayıları</h3>
+        <table class="table" border="1">
+        <tr class="bg-dark">
+            <th style="color:white;">Sayfa</th>
+            <th style="color:white;">Görüntülenme Sayısı</th>
+        </tr>
+        @foreach (var item in Model.ListPage)
+        {
+            <tr>
+                <td>@item.PageName</td>
+                <td>@item.PageCount.ToString("n0")</td>
+            </tr>
+        }
+        </table>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+
+<div>
+    <div class="row">
+        <h3>Günlük Sayfa Görüntüleme Sayıları</h3>
+    </div>
+    <div>
+        <br />
+        <form class="form" action="/home/Index" method="post">
+            @Html.Hidden("isFilterFlag", true)
+            <div class="row">
+                <div class="col-lg-5 ">
+                    <label for="startDate">Başlangıç Tarihi</label>
+                    <input type="text" class="form-control" id="startDate" name="startDate">
+                </div>
+                <div class="col-lg-5">
+                    <label for="endDate">Bitiş Tarihi</label>
+                    <input type="text" class="form-control" id="endDate" name="endDate">
+                </div>
+                <div class="row col-lg-2">
+                    <input type="submit" class="btn btn-success" value="Filtrele">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<div>
+    <div class="row">
+        @if (Model.ListDate.Count > 0)
+        {
+            <table class="table" border="1">
+                <tr class="bg-dark">
+                    <th>Tarih</th>
+                    <th>Ziyaretçi Sayısı</th>
+                </tr>
+            @foreach (var item in Model.ListDate)
+            {
+                <tr>
+                    <td>@item.VisitDate.ToShortDateString()</td>
+                    <td>@item.VisitCount.ToString("n0")</td>
+                </tr>
+            }
+            </table>
+        }
+        else
+        {
+            <div>
+                <h3 style="color:red;">Girilen tarihlere uygun kayıt bulunamadı</h3>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
